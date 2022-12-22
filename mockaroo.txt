@@ -1,0 +1,13 @@
+# MOCKAROO
+
+# DRZAVA 
+if this == 'SE' then 'SE'
+else if this == 'NI' then 'NI'  
+else if this == 'SN' then 'SN'
+else if this == 'VN' then 'VN'
+else if this == 'BR' then 'BR'
+else if this == 'BO' then 'BO'
+else 'PH' end 
+
+# POSTNA ST
+pad(this, 5, '0', "right")
