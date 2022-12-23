@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      ORACLE Version 10gR2                         */
-/* Created on:     21. 12. 2022 12:07:45                        */
+/* Created on:     23. 12. 2022 20:20:52                        */
 /*==============================================================*/
 
 
@@ -323,14 +323,14 @@ create index Zivi_FK on Oseba (
 /* Table: Pocitnice                                             */
 /*==============================================================*/
 create table Pocitnice  (
-   IdPočitnice          INTEGER                         not null,
+   IdPocitnice          INTEGER                         not null,
    IdHotel              INTEGER                         not null,
    Kratica              VARCHAR2(3)                     not null,
    Ime                  VARCHAR2(1024)                  not null,
    Odhod                DATE                            not null,
    Prihod               DATE                            not null,
    SteviloProstihMest   INTEGER                         not null,
-   constraint PK_POCITNICE primary key (IdPočitnice)
+   constraint PK_POCITNICE primary key (IdPocitnice)
 );
 
 comment on table Pocitnice is
@@ -394,18 +394,18 @@ create index Pripada_2_FK on Pripada_1 (
 /* Table: Program                                               */
 /*==============================================================*/
 create table Program  (
-   IdPočitnice          INTEGER                         not null,
+   IdPocitnice          INTEGER                         not null,
    IdAktivnost          INTEGER                         not null,
    DatumIzvedbe         DATE                            not null,
    Opis                 VARCHAR2(1024),
-   constraint PK_PROGRAM primary key (IdPočitnice, IdAktivnost, DatumIzvedbe)
+   constraint PK_PROGRAM primary key (IdPocitnice, IdAktivnost, DatumIzvedbe)
 );
 
 /*==============================================================*/
 /* Index: Ima_FK                                                */
 /*==============================================================*/
 create index Ima_FK on Program (
-   IdPočitnice ASC
+   IdPocitnice ASC
 );
 
 /*==============================================================*/
@@ -420,7 +420,7 @@ create index Ima_3_FK on Program (
 /*==============================================================*/
 create table Rezervacija  (
    IdRezervacija        INTEGER                         not null,
-   IdPočitnice          INTEGER                         not null,
+   IdPocitnice          INTEGER                         not null,
    IdOseba              INTEGER                         not null,
    ZnesekPlacila        NUMBER                          not null,
    constraint PK_REZERVACIJA primary key (IdRezervacija)
@@ -430,7 +430,7 @@ create table Rezervacija  (
 /* Index: Se_nanasa_FK                                          */
 /*==============================================================*/
 create index Se_nanasa_FK on Rezervacija (
-   IdPočitnice ASC
+   IdPocitnice ASC
 );
 
 /*==============================================================*/
@@ -546,8 +546,8 @@ alter table Pripada_1
       references Stranka (IdOseba);
 
 alter table Program
-   add constraint FK_PROGRAM_IMA_POCITNIC foreign key (IdPočitnice)
-      references Pocitnice (IdPočitnice);
+   add constraint FK_PROGRAM_IMA_POCITNIC foreign key (IdPocitnice)
+      references Pocitnice (IdPocitnice);
 
 alter table Program
    add constraint FK_PROGRAM_IMA_3_AKTIVNOS foreign key (IdAktivnost)
@@ -558,8 +558,8 @@ alter table Rezervacija
       references Zaposleni (IdOseba);
 
 alter table Rezervacija
-   add constraint FK_REZERVAC_SE_NANASA_POCITNIC foreign key (IdPočitnice)
-      references Pocitnice (IdPočitnice);
+   add constraint FK_REZERVAC_SE_NANASA_POCITNIC foreign key (IdPocitnice)
+      references Pocitnice (IdPocitnice);
 
 alter table Stranka
    add constraint FK_STRANKA_DEDOVANJE_OSEBA foreign key (IdOseba)
