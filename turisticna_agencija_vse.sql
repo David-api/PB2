@@ -3,6 +3,9 @@
 /* Created on:     23. 12. 2022 20:20:52                        */
 /*==============================================================*/
 
+/*==============================================================*/
+/* KREIRANJE TABEL IN INDEKSOV                                  */
+/*==============================================================*/
 
 alter table Aktivnost
    drop constraint FK_AKTIVNOS_SE_ODVIJA_NASLOV;
@@ -581,7 +584,36 @@ alter table Zaposleni
    add constraint FK_ZAPOSLEN_DELA_DELOVNOM foreign key (IdDelovnoMesto)
       references DelovnoMesto (IdDelovnoMesto);
 
+/*==============================================================*/
+/* SEKUNDARNI INDEXI                                            */
+/*==============================================================*/
 
+
+create index Odhod on Pocitnice (
+   odhod DESC
+);
+
+create index Ocena on Hotel (
+   OcenaHotela DESC
+);
+
+create index PriimekIme on Oseba (
+    priimek ASC,
+    ime ASC
+);
+
+create index ZnesekPlacilaIdRezervacija on Rezervacija(
+    znesekPlacila DESC,
+    idRezervacija ASC
+);
+
+create index Tocke on Ocena(
+    tocke DESC
+);
+
+/*==============================================================*/
+/* POLNJENJE S PODATKI                                          */
+/*==============================================================*/
 --Drzava
 INSERT INTO Drzava (Kratica, Naziv) VALUES ('ID', 'Indonesia');
 INSERT INTO Drzava (Kratica, Naziv) VALUES ('SE', 'Sweden');
