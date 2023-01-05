@@ -3,8 +3,12 @@
 /*==============================================================*/
 
 --TRANSAKCIJA 1
---Za vsako rezervacijo izpišite podatke o imenu potovanja, na katerega se nanaša in podatke o potnikih (ime, priimek, naslov, datum rojstva, EMŠO in številko osebne izkaznice), 
---znesku plaèila in zaposlenem (ime, priimek in delovno mesto), ki je rezervacijo odobril. Rezervacije naj bodo urejene po znesku plaèila padajoèe in id rezervacije narascajoce.
+--Za vsako rezervacijo izpišite podatke o imenu potovanja, 
+--na katerega se nanaša in podatke o potnikih 
+--(ime, priimek, naslov, datum rojstva, EMŠO in številko osebne izkaznice), 
+--znesku plaèila in zaposlenem (ime, priimek in delovno mesto), 
+--ki je rezervacijo odobril. 
+--Rezervacije naj bodo urejene po znesku plaèila padajoèe in id rezervacije narascajoce.
 SELECT r.idRezervacija, p.ime AS "Ime poèitnic", 
 (
     SELECT o1.ime
@@ -46,8 +50,10 @@ ORDER BY  r.znesekPLacila DESC, r.idRezervacija ASC;
 
 
 --TRANSAKCIJA 2
---Izpišite ime potovanja, odhod, prihod, trajanje, število vseh mest in število prostih mest, ki so še na voljo za vsa potovanja,
---ki so v ponudbi (to so tista potovanja, katerih datum odhoda je veèji od trenutnega datuma - 1 teden).
+--Izpišite ime potovanja, odhod, prihod, trajanje, število vseh mest 
+--in število prostih mest, ki so še na voljo za vsa potovanja,
+--ki so v ponudbi (to so tista potovanja, 
+--katerih datum odhoda je veèji od trenutnega datuma - 1 teden).
 SELECT p.ime AS "Ime poèintnic", p.odhod, p.prihod, (p.prihod - p.odhod) AS "Trajanje", p.steviloProstihMest AS "Število vseh mest",  p.steviloProstihMest - (
     SELECT COUNT(pripada_1.idOseba) AS "Zasedena mesta"
     FROM pripada_1
@@ -208,3 +214,95 @@ create index ZnesekPlacilaIdRezervacija on Rezervacija(
 create index Tocke on Ocena(
     tocke DESC
 );
+
+
+/*==============================================================*/
+/* BAZNI PROŽILCI                                               */
+/*==============================================================*/
+
+/*
+CREATE OR REPLACE TRIGGER PreveriDrzavPocitnic
+BEFORE INSERT or UPDATE ON Pocitnice
+FOR EACH ROW
+DECLARE
+    kratica_1 varchar2(3);
+BEGIN
+    SELECT kratica INTO kratica_1 FROM hotel WHERE idHotel = :new.IdHotel;
+    IF kratica_1 = :new.kratica THEN
+        INSERT INTO Pocitnice(IdPocitnice,IdHotel,Kratica,Ime,odhod,Prihod,SteviloProstihMest) 
+        VALUES (:new.IdPocitnice, :new.IdHotel, :new.Kratica, :new.Ime, TO_DATE(:new.odhod, 'dd/mm/YYYY'),TO_DATE(:new.Prihod, 'dd/mm/YYYY'), :new.SteviloProstihMest);
+    ELSE 
+        RAISE_APPLICATION_ERROR(-20001, 'DRZAVA POCITNNIC MORA BITI ENAKA DRZAVI HOTELA V KATEREM SE POCITNICE ODVIJAJO');
+    END IF;
+END;
+/   
+*/
+
+
+/* 
+-- NE DELA
+CREATE OR REPLACE TRIGGER PreveriHotelskeStoritve
+BEFORE INSERT or UPDATE ON Vsebuje
+FOR EACH ROW
+DECLARE    
+    storitev_obstaja int;
+BEGIN
+
+    SELECT count(nu.idStoritve) INTO storitev_obstaja
+            FROM nudi nu
+        WHERE nu.idHotel = 
+        (
+                SELECT p.idHotel
+                FROM rezervacija r
+                    INNER JOIN pocitnice p
+                        ON  r.idPocitnice = p.idPocitnice
+                WHERE r.idRezervacija = :new.IdRezervacija
+        ) AND nu.idStoritve = :new.IdStoritve;
+    
+    dbms_output.put_line('' + storitev_obstaja);
+    IF storitev_obstaja = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'IZBRANI HOTEL NE IZVAJA IZBRANE STORITVE');   
+    ELSE
+        INSERT INTO Vsebuje(IdStoritve,IdRezervacija)
+        VALUES (:new.IdStoritve, :new.IdRezervacija);
+    END IF;    
+END;
+/
+*/ 
+
+CREATE OR REPLACE TRIGGER PovprecnaOcenaHotela
+AFTER INSERT or UPDATE or DELETE ON Ocena
+FOR EACH ROW
+DECLARE
+    povprecnaOcena int;
+BEGIN
+    SELECT round((Hotel.OcenaHotela + :new.tocke) / 2, 0) INTO povprecnaOcena FROM Hotel WHERE Hotel.idhotel = :new.idHotel;
+    UPDATE Hotel SET ocenahotela = povprecnaOcena WHERE idhotel = :new.idHotel;
+END;
+/
+
+/*==============================================================*/
+/* POGLEDI                                                      */
+/*==============================================================*/
+
+CREATE OR REPLACE VIEW AVG_ZASLUZEK_ZAPOSLENEGA_NA_REZERVACIJO AS
+      SELECT o.ime, o.priimek, dm.naziv AS "Delovno mesto",
+        round((
+            SELECT SUM(r.znesekPlacila)
+            FROM rezervacija r
+            WHERE r.idOseba = o.idOseba
+        ) /     
+        (
+            SELECT COUNT(r.idRezervacija)
+            FROM rezervacija r
+            WHERE r.idOseba = o.idOseba
+        ), 2)  AS "Povpreèen zaslužek na rezervacijo"
+        FROM oseba o
+            INNER JOIN zaposleni z
+                ON o.idOseba = z.idOseba
+            INNER JOIN delovnomesto dm
+                ON z.idDelovnoMesto = dm.idDelovnoMesto
+        ORDER BY "Povpreèen zaslužek na rezervacijo" DESC;
+ 
+ 
+

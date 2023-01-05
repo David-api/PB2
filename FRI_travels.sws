@@ -4,8 +4,8 @@
 
 <Workspace>
 	<Local Expanded="Yes">
-		<Model Expanded="Yes" ID="{905EA7B6-94EF-4B78-B116-99CE7C415D69}" Name="turisticna_agencija" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="/Users/david/Downloads/zohar_cadez/FRI travels.cdm"/>
 		<Model Expanded="Yes" ID="{85C59EE5-7A95-4A30-BDA6-33DA67E0C6BE}" Name="turisticna_agencija" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="turisticna_agencija.pdm"/>
+		<Model Expanded="Yes" ID="{905EA7B6-94EF-4B78-B116-99CE7C415D69}" Name="turisticna_agencija" Type="{1E597170-9350-11D1-AB3C-0020AF71E433}" URL="FRI travels.cdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>

@@ -3255,11 +3255,11 @@ EntityComment 0 Arial,8,N</a:FontList>
 </o:DataItem>
 <o:DataItem Id="o86">
 <a:ObjectID>84F42ED7-9C77-44EB-BEAE-232447E8B169</a:ObjectID>
-<a:Name>IdPočitnice</a:Name>
-<a:Code>IdPočitnice</a:Code>
+<a:Name>IdPocitnice</a:Name>
+<a:Code>IdPocitnice</a:Code>
 <a:CreationDate>1668350951</a:CreationDate>
 <a:Creator>lukaz</a:Creator>
-<a:ModificationDate>1670937412</a:ModificationDate>
+<a:ModificationDate>1671822911</a:ModificationDate>
 <a:Modifier>david</a:Modifier>
 <a:DataType>I</a:DataType>
 </o:DataItem>

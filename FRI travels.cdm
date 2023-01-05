@@ -857,7 +857,7 @@ EnableTransformations=No</a:ModelOptionsText>
 <a:Code>Diagram_1</a:Code>
 <a:CreationDate>1668267674</a:CreationDate>
 <a:Creator>lukaz</a:Creator>
-<a:ModificationDate>1671729621</a:ModificationDate>
+<a:ModificationDate>1671905945</a:ModificationDate>
 <a:Modifier>david</a:Modifier>
 <a:DisplayPreferences>[DisplayPreferences]
 
@@ -1190,22 +1190,24 @@ Shadow=0</a:DisplayPreferences>
 <a:PaperSource>7</a:PaperSource>
 <c:Symbols>
 <o:TextSymbol Id="o13">
-<a:Text>Problemi pri dedovanju s tabelo stranka (power designer pravi da more tudi tabela stranka imeti svoj PK) predvidevam da zaradi indexov</a:Text>
+<a:Text>V primeru da tabela stranka nima nastavljenega atributa EMSO kot primarni kljuc, PowerDesigner javi napako. Ta problem sem rešil tako, da v logičnem modelu primarni ključ na atributu EMSO izklopim in pobrišem index tega atributa.</a:Text>
 <a:CreationDate>1671401540</a:CreationDate>
-<a:ModificationDate>1671401607</a:ModificationDate>
-<a:Rect>((32626,21679), (37425,35325))</a:Rect>
+<a:ModificationDate>1671905691</a:ModificationDate>
+<a:Rect>((43377,20485), (69123,27741))</a:Rect>
 <a:TextStyle>4130</a:TextStyle>
+<a:AutoAdjustToText>0</a:AutoAdjustToText>
 <a:LineColor>0</a:LineColor>
 <a:DashStyle>7</a:DashStyle>
 <a:FillColor>0</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
 <a:FontName>Arial,8,N</a:FontName>
+<a:ManuallyResized>1</a:ManuallyResized>
 </o:TextSymbol>
 <o:TextSymbol Id="o14">
-<a:Text>Oceno hotela je povprečje ocen, ki se nahajajo v tabeli ocena.</a:Text>
+<a:Text>Atribut OcenaHotela je izpeljani atribut, ki se izračuna na podlagi atributa Tocke iz tabele Ocena. Bazni prožilec skrbi, da so zapisi v tabeli Hotel stalno posodobljeni.</a:Text>
 <a:CreationDate>1671561597</a:CreationDate>
-<a:ModificationDate>1671561630</a:ModificationDate>
-<a:Rect>((-13994,56849), (628,61723))</a:Rect>
+<a:ModificationDate>1671905507</a:ModificationDate>
+<a:Rect>((-16799,56252), (7825,61126))</a:Rect>
 <a:TextStyle>4130</a:TextStyle>
 <a:AutoAdjustToText>0</a:AutoAdjustToText>
 <a:LineColor>0</a:LineColor>
@@ -1238,9 +1240,9 @@ NAMA 0 Arial,8,N</a:FontList>
 </o:RelationshipSymbol>
 <o:RelationshipSymbol Id="o19">
 <a:CreationDate>1668269318</a:CreationDate>
-<a:ModificationDate>1670681147</a:ModificationDate>
-<a:Rect>((-46219,-6705), (-1279,-2621))</a:Rect>
-<a:ListOfPoints>((-1279,-6705),(-20844,-6705),(-20844,-2621),(-46219,-2621))</a:ListOfPoints>
+<a:ModificationDate>1671905868</a:ModificationDate>
+<a:Rect>((-46219,-6705), (-1279,-3123))</a:Rect>
+<a:ListOfPoints>((-1279,-6705),(-20844,-6705),(-20844,-3123),(-46219,-3123))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>4632</a:ArrowStyle>
 <a:LineColor>11184640</a:LineColor>
@@ -1385,7 +1387,7 @@ NAMA 0 Arial,8,N</a:FontList>
 <o:RelationshipSymbol Id="o42">
 <a:CreationDate>1668349628</a:CreationDate>
 <a:ModificationDate>1670681702</a:ModificationDate>
-<a:Rect>((-59127,-15036), (-56203,34584))</a:Rect>
+<a:Rect>((-59126,-15036), (-56202,34584))</a:Rect>
 <a:ListOfPoints>((-57665,-15036),(-57665,34584))</a:ListOfPoints>
 <a:CornerStyle>2</a:CornerStyle>
 <a:ArrowStyle>4632</a:ArrowStyle>
